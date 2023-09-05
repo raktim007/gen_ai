@@ -10,7 +10,7 @@ import pyodbc
 openai.api_type = "azure"
 openai.api_base = "https://generativetesing12.openai.azure.com/"
 openai.api_version = "2022-12-01"
-openai.api_key = "key"
+openai.api_key = "7b6053efd02247279c877b52fd78ff36"
 
 # Streamlit app
 st.title("SQL Query Generator")
@@ -68,20 +68,16 @@ try:
         # Extract generated email from response
         generated_query = response.choices[0].text.strip()
         
-        # Display generated email
-        st.write("Generated SQL Query:")
-        st.code(generated_query)
-
         try:
             cursor.execute(generated_query)
             query_result = cursor.fetchall()
 
             #display the query result
 
-            st.write("Generated SQL QUery")
+            st.write("Generated SQL Query")
             st.code(generated_query)
             st.write("Query Results:")
-            st.code(query_result)
+            st.table(query_result)
 
         except pyodbc.Error as e:
             st.error(f"Error executing SQL query: {str(e)}")
