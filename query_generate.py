@@ -10,7 +10,7 @@ import pyodbc
 openai.api_type = "azure"
 openai.api_base = "https://generativetesing12.openai.azure.com/"
 openai.api_version = "2022-12-01"
-openai.api_key = "7b6053efd02247279c877b52fd78ff36"
+openai.api_key = "Key"
 
 # Streamlit app
 st.title("SQL Query Generator")
