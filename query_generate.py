@@ -10,7 +10,7 @@ import pyodbc
 openai.api_type = "azure"
 openai.api_base = "https://generativetesing12.openai.azure.com/"
 openai.api_version = "2022-12-01"
-openai.api_key = "Key"
+openai.api_key = "key"
 
 # Streamlit app
 st.title("SQL Query Generator")
@@ -48,8 +48,11 @@ try:
 
     user_input = st.text_input("Enter a natural language query:")
 
+    #database selection dropdown
+    selected_database = st.selectbox("Select Database Type", ["Oracle", "MySQL", "MS Access", "PostgreSQL"])
+
     # Text input
-    sqlquery_prompt = f"Generate  an sql query to retrieve data:{user_input}"
+    sqlquery_prompt = f"Generate  an sql query in {selected_database} to retrieve data:{user_input}"
 
     # Generate query
     if user_input and st.button("Generate SQL Query"):
@@ -71,13 +74,15 @@ try:
         try:
             cursor.execute(generated_query)
             query_result = cursor.fetchall()
+            print(type(query_result))
+            print(type(query_result[0]))
 
             #display the query result
 
             st.write("Generated SQL Query")
             st.code(generated_query)
             st.write("Query Results:")
-            st.table(query_result)
+            st.dataframe(query_result)
 
         except pyodbc.Error as e:
             st.error(f"Error executing SQL query: {str(e)}")
